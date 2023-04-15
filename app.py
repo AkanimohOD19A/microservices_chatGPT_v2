@@ -103,6 +103,7 @@ option = st.sidebar.selectbox("How would you like to run your query?", ("Use Key
 ## start timer
 start = time.time()
 if option == "Use Keywords":
+    st.sidebar.markdown("---")  ## Divider
     ## Read a list of adjectives and actions
     tone = pd.read_csv('./prefix_data/tone.csv')
     comprehension = pd.read_csv('./prefix_data/comprehension.csv')
