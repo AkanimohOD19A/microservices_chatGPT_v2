@@ -158,7 +158,7 @@ with col3:
                                columns=['word', 'count'])
     st.dataframe(wordCountDf, height=200, use_container_width=True)
 
-# st.sidebar.markdown("---")  ## Divider
+st.sidebar.markdown("---")  ## Divider
 # st.sidebar.info("We have a bunch of keywords to articulate our query, this might not meet your requirement. "
 #                 "Click on the button below to modify.")
 # if st.sidebar.button("Edit Keywords"):
