@@ -114,7 +114,7 @@ if option == "Use Keywords":
     style_response_type = st.sidebar.selectbox("Please specify your style*", style)
     revision_response_type = st.sidebar.selectbox("Please specify Degree of Revision", revisions)
     response_length = st.sidebar.slider("Please specify the length of words to return", 25, 750, 100)
-    if tone_response_type != "" and comprehension_response_type != "" \
+    if tone_response_type != "" and comprehension_response_type != "" and style_response_type != "" \
             or revision_response_type != "" or response_length != "":
         prefix_keyword = create_action(tone_response_type, comprehension_response_type,
                                        style_response_type, revision_response_type)
