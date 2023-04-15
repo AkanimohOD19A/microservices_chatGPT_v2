@@ -30,8 +30,10 @@ if cache_clear_dt("dummy") < date.today():
 #     prefix_keyword = myString + " and " + str(response_type)
 #     return prefix_keyword
 
-def create_action(adj_response_type, response_type, revision_type):
-    strList = [str(adj_response_type), str(response_type), str(revision_type)]
+def create_action(tone_response_type, comprehension_response_type,
+                  style_response_type, revision_response_type):
+    strList = [str(tone_response_type), str(comprehension_response_type),
+               str(style_response_type), str(revision_response_type)]
     prefix_keyword = ", ".join(strList)
     return prefix_keyword
 
@@ -105,14 +107,17 @@ if option == "Use Keywords":
     tone = pd.read_csv('./prefix_data/tone.csv')
     comprehension = pd.read_csv('./prefix_data/comprehension.csv')
     revisions = pd.read_csv('./prefix_data/revision.csv')
+    style = pd.read_csv('./prefix_data/style.csv')
 
     tone_response_type = st.sidebar.selectbox("Please specify Tone*", tone)
     comprehension_response_type = st.sidebar.selectbox("Please specify Reader Comprehension*", comprehension)
+    style_response_type = st.sidebar.selectbox("Please specify your style*", style)
     revision_response_type = st.sidebar.selectbox("Please specify Degree of Revision", revisions)
     response_length = st.sidebar.slider("Please specify the length of words to return", 25, 750, 100)
     if tone_response_type != "" and comprehension_response_type != "" \
             or revision_response_type != "" or response_length != "":
-        prefix_keyword = create_action(tone_response_type, comprehension_response_type, revision_response_type)
+        prefix_keyword = create_action(tone_response_type, comprehension_response_type,
+                                       style_response_type, revision_response_type)
         prefix_query = f'Using Keywords: {prefix_keyword} provide a response to {user_query} ' \
                        f'with a length of {response_length} words'
         st.sidebar.markdown('##')  ##-> Empty Space Divider
@@ -153,9 +158,9 @@ with col3:
                                columns=['word', 'count'])
     st.dataframe(wordCountDf, height=200, use_container_width=True)
 
-st.sidebar.markdown("---")  ## Divider
-st.sidebar.info("We have a bunch of keywords to articulate our query, this might not meet your requirement. "
-                "Click on the button below to modify.")
+# st.sidebar.markdown("---")  ## Divider
+# st.sidebar.info("We have a bunch of keywords to articulate our query, this might not meet your requirement. "
+#                 "Click on the button below to modify.")
 # if st.sidebar.button("Edit Keywords"):
 #     ### Lifecycle of Dataframe
 #     ## Read csv
