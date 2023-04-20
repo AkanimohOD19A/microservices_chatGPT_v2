@@ -119,8 +119,15 @@ if option == "Use Keywords":
             or revision_response_type != "" or response_length != "":
         prefix_keyword = create_action(tone_response_type, comprehension_response_type,
                                        style_response_type, revision_response_type)
-        prefix_query = f'Using Keywords: {prefix_keyword} provide a response to {user_query} ' \
-                       f'with a length of {response_length} words'
+        # prefix_query = f'Using Keywords: {prefix_keyword} provide a response to {user_query} ' \
+        #                f'with a length of {response_length} words'
+        prefix_query = f'Prompt: {user_query}' \
+                       f'Act as: Editor' \
+                       f'Degree of Revision: {revision_response_type}' \
+                       f'Response style: {style_response_type}' \
+                       f'Response Tone: {tone_response_type}' \
+                       f'Reader Comprehension: {comprehension_response_type}' \
+                       f'Length of response: {response_length} words'
         st.sidebar.markdown('##')  ##-> Empty Space Divider
         if st.sidebar.button("Run"):
             with st.spinner('Your query is running...'):
