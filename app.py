@@ -17,7 +17,6 @@ def cache_clear_dt(dummy):
     clear_dt = date.today()
     return clear_dt
 
-
 if cache_clear_dt("dummy") < date.today():
     cache.clear_cache()
 
@@ -78,7 +77,7 @@ def api_call_on(query):
 
 # Set the model engine and your OpenAI API key
 model_engine = "text-davinci-003"
-openai.api_key = st.secrets["Openai_SECRET_KEY"]
+# openai.api_key = st.secrets["Openai_SECRET_KEY"]
 
 st.title("Auto-Query Customer engagements with ChatGPT")
 st.markdown("##### This is a web application that allows you to interact with "
@@ -87,12 +86,24 @@ st.markdown("##### This is a web application that allows you to interact with "
 st.markdown('##')  ##-> Empty Space Divider
 
 st.sidebar.header("Instructions")
+
+# Retrieve Open ai Secrets
+# st.sidebar.warning(
+#     '''
+#     Your Openai keys should not be shared with others or exposed in any client-side code
+#     (like browsers or apps) as they could be used to make unauthorized
+#     requests on your behalf
+#     '''
+# )
+openai.api_key = st.sidebar.text_input('OpenAI API Key', type='password')
+
 st.sidebar.info(
     '''
-       Enter a **query** in the **text box** and **press enter** to receive 
-       a **response** from the ChatGPT
+       Enter your **open ai key** and follow-through with the **query** in the **text box** 
+       and **press enter** to receive a **response** from the ChatGPT
     '''
 )
+
 # Get user input
 user_query = st.text_input("Enter query here, to exit enter :q",
                            "what is Customer Lifeclycle?")
@@ -130,12 +141,19 @@ if option == "Use Keywords":
                        f'Length of response: {response_length} words'
         st.sidebar.markdown('##')  ##-> Empty Space Divider
         if st.sidebar.button("Run"):
-            with st.spinner('Your query is running...'):
-                response = api_call_on(prefix_query)
-                st.success(f"{response}")
+            if not openai.api_key.startswith('sk-'):
+                st.warning('Please enter your OpenAI API key!', icon='⚠')
+            else:
+                with st.spinner('Your query is running...'):
+                    response = api_call_on(prefix_query)
+                    st.success(f"{response}")
 else:
-    response = api_call_on(user_query)
-    st.success(f"{response}")
+    if not openai.api_key.startswith('sk-'):
+        st.warning('Please enter your OpenAI API key!', icon='⚠')
+    else:
+        response = api_call_on(user_query)
+        st.success(f"{response}")
+
 ## End Timer
 end = time.time()
 ## Query Time
